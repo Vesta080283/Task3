@@ -1,32 +1,31 @@
 let colors = ['red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown', 'red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown'];
 let play = false;
-let play = false;
 
 document.body.onload = newField();
 
-function newField() {
-    colors.sort(compareRandom);
-    colors.forEach(function (color) {
-        let borderElem = document.createElement('div');
-        borderElem.className = 'border';
-        let newElem = document.createElement('div');
-        newElem.className = 'card';
-        newElem.style.backgroundColor = color;
-        newElem.style.opacity = 0;
-        newElem.addEventListener('click', onClickCard);
-        borderElem.appendChild(newElem);
-        document.querySelector('.gameField').appendChild(borderElem);
-    })
+const newField = () => {    
+        colors.sort(compareRandom);
+        colors.forEach( (color) => {
+            let borderElem = document.createElement('div');
+            borderElem.className = 'border';
+            let newElem = document.createElement('div');
+            newElem.className = 'card';
+            newElem.style.backgroundColor = color;
+            newElem.style.opacity = 0;
+            newElem.addEventListener('click', onClickCard);
+            borderElem.appendChild(newElem);
+            document.querySelector('.gameField').appendChild(borderElem);
+        })    
 }
 
-function compareRandom(a, b) {
+const compareRandom = (a, b) => {
     return Math.random() - 0.5;
 }
 
-function clearField() {
-    let parent = document.querySelector('.gameField');
-    while (parent.firstChild) {
-        parent.firstChild.remove();
+const clearField = () => {
+  let parent = document.querySelector('.gameField');
+  while (parent.firstChild) {
+    parent.firstChild.remove();
     };
 }
 
@@ -36,14 +35,13 @@ let steps = 0;
 let selCard;
 let selColor;
 
-function onClickCard(e) {
+const onClickCard = (e) => {
     let card = e.target;
 
     if (play) {
         if (getComputedStyle(card).opacity == 0) {
             steps++;
             card.style.opacity = 1;
-
             setTimeout(() => {
                 if (check) {
                     check = false;
@@ -53,8 +51,7 @@ function onClickCard(e) {
                             alert('Вы выиграли! Затраченное время: ' + timer.innerHTML);
                             resetTimer();
                         }
-                    } else {
-
+                    } else {                        
                         selCard.style.opacity = 0;
                         card.style.opacity = 0;
                     }
@@ -74,8 +71,8 @@ let second = 0, minute = 0; hour = 0;
 let timer = document.querySelector('.timer');
 let interval;
 
-function startTimer() {
-    interval = setInterval(function () {
+const startTimer = () => {
+    interval = setInterval( () => {
         timer.innerHTML = minute + ":" + second;
         second++;
         if (second == 60) {
@@ -89,18 +86,18 @@ function startTimer() {
     }, 1000);
 }
 
-function resetTimer() {
+const resetTimer = () => {
     second = 0;
-    minute = 0;
+    minute = 0; 
     hour = 0;
     timer.innerHTML = "0:0";
     clearInterval(interval);
-}
+} 
 
-function startGame(_play) {
+const startGame = (_play) => {
     play = _play;
     resetTimer();
-    clearField();
-    newField();
+    clearField();    
+    newField();    
     startTimer();
 }
