@@ -1,0 +1,22 @@
+.gameField {
+    width: 150px;
+    height: 150px;
+}
+
+.card {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.border {
+    float: left;
+    display: block;
+    margin: 1px;
+    border: 1px solid #dfdfdf;
+}
+
+.timer {
+    display: inline-block;
+    margin: 0 1rem;
+}
