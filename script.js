@@ -1,4 +1,9 @@
+'use strict'
 let colors = ['red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown', 'red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown'];
+
+/// may be use HEX
+//let colors = ['#FF0000', '#FF8000', '#FFFF00', '#40FF00', '#01DFD7', '#0000FF', '#FF00BF', '#071918', '#FF0000', '#FF8000', '#FFFF00', '#40FF00', '#01DFD7', '#0000FF', '#FF00BF', '#071918'];
+
 let play = false;
 
 document.body.onload = newField();
