@@ -22,5 +22,10 @@
 }
 
 .hidden {
+    background: #fff !important;
+}
+
+/*.hidden {
     opacity: 0;
 }
+*/
