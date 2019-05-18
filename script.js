@@ -1,25 +1,33 @@
 'use strict'
 window.onload = () => {
+    let play = false;
     let colors = ['red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown', 'red', 'orange', 'green', 'grey', 'magenta', 'blue', 'pink', 'brown'];
     /// or use HEX
     //let colors = ['#FF0000', '#FF8000', '#FFFF00', '#40FF00', '#01DFD7', '#0000FF', '#FF00BF', '#071918', '#FF0000', '#FF8000', '#FFFF00', '#40FF00', '#01DFD7', '#0000FF', '#FF00BF', '#071918'];
-    
-    let play = false;
 
     document.body.onload = newField();
+    document.querySelector('.startBtn').addEventListener('click', startGame);
 
+    function startGame() {
+        play = true;
+        resetTimer();
+        clearField();
+        newField();
+        startTimer();
+    }
+   
     function newField() {
         colors.sort(compareRandom);
         colors.forEach(function (color) {
-            let borderElem = document.createElement('div');
-            borderElem.className = 'border';
-            let newElem = document.createElement('div');
-            newElem.className = 'card';
-            newElem.style.backgroundColor = color;
-            newElem.style.opacity = 0;
-            newElem.addEventListener('click', onClickCard);
-            borderElem.appendChild(newElem);
-            document.querySelector('.gameField').appendChild(borderElem);
+            let border = document.createElement('div');
+            border.className = 'border';
+            let card = document.createElement('div');
+            card.className = 'card';
+            card.classList.add('hidden');
+            card.style.backgroundColor = color;
+            card.addEventListener('click', onClickCard);
+            border.appendChild(card);
+            document.querySelector('.gameField').appendChild(border);
         })
     }
 
@@ -37,21 +45,22 @@ window.onload = () => {
     let check = false;
     let openCards = 0;
     let steps = 0;
-    let selCard;
-    let selColor;
+    let openCard;
+    let openColor;
 
     function onClickCard(e) {
-        let card = e.target;
+        let selCard = e.target;
 
         if (play) {
-            if (getComputedStyle(card).opacity == 0) {
+            if (selCard.classList.contains('hidden')) {
+                selCard.classList.remove('hidden')
                 steps++;
-                card.style.opacity = 1;
+                console.log(steps);
 
                 setTimeout(() => {
                     if (check) {
                         check = false;
-                        if (card.style.backgroundColor == selColor) {
+                        if (selCard.style.backgroundColor == openColor) {
                             openCards++;
                             if (openCards == 8) {
                                 alert('Вы выиграли! Затраченное время: ' + timer.innerHTML);
@@ -59,12 +68,12 @@ window.onload = () => {
                             }
                         } else {
 
-                            selCard.style.opacity = 0;
-                            card.style.opacity = 0;
+                            selCard.classList.add('hidden');
+                            openCard.classList.add('hidden');
                         }
                     } else {
-                        selCard = card;
-                        selColor = card.style.backgroundColor;
+                        openCard = selCard;
+                        openColor = selCard.style.backgroundColor;
                         check = true;
                     }
                 }, 100);
@@ -74,7 +83,7 @@ window.onload = () => {
 
     //description timer
 
-    let second = 0, minute = 0; hour = 0;
+    let second = 0, minute = 0, hour = 0;
     let timer = document.querySelector('.timer');
     let interval;
 
@@ -99,15 +108,5 @@ window.onload = () => {
         hour = 0;
         timer.innerHTML = "0:0";
         clearInterval(interval);
-    }
-
-    document.querySelector('.startBtn').addEventListener('click', startGame);
-
-    function startGame() {
-        play = true;
-        resetTimer();
-        clearField();
-        newField();
-        startTimer();
     }
 }
